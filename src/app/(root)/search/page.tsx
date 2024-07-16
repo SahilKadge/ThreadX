@@ -1,0 +1,49 @@
+import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
+import { currentUser } from "@clerk/nextjs/server"
+import { redirect } from "next/navigation";
+import ProfileHeader from "@/components/shared/ProfileHeader"
+import { Tabs, TabsList, TabsContent, TabsTrigger } from "@radix-ui/react-tabs";
+import { profileTabs } from "@/constants";
+
+import Image from "next/image";
+import ThreadTab from "@/components/shared/ThreadTab";
+import { UserCard } from "@/components/cards/UserCard";
+
+export default async function SearchPage(){
+    const user = await currentUser();
+    if (!user) return null;
+    const userInfo = await fetchUser(user.id);
+    if(!userInfo?.onboarding) redirect('/onboarding');
+    // fetch users 
+    const result = await fetchUsers({
+        userId: user.id,
+        searchString:"",
+        pageNumber: 1,
+        pageSize: 25,
+    })
+    return (
+        <>
+            <h1 className="head-text text-white mb-10 ">Search</h1>
+            {/* search bar */}
+            <div className="mt-14 flex flex-col gap-9">
+                {result.users.length === 0 ? (
+                    <p className="no-result"> No users</p>
+                ):(
+                    <>
+                        {result.users.map((person) => (
+                        <UserCard
+                            key={person.id}
+                            id={person.id}
+                            name={person.name}
+                            username= {person.username}
+                            imgUrl= {person.image}
+                            personType ='User'
+                        />
+                        ))}
+                    </>
+                )}
+
+            </div>
+        </>
+    )
+}
