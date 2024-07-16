@@ -1,7 +1,7 @@
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation";
-import { ProfileHeader } from "@/components/shared/ProfileHeader";
+
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@radix-ui/react-tabs";
 import { profileTabs } from "@/constants";
 
