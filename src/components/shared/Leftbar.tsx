@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 import { SignedIn, SignedOut, SignInButton, useAuth } from "@clerk/nextjs";
 import { SignOutButton } from "@clerk/nextjs";
+import { Button } from "../ui/button";
 export const Leftbar = () => {
   // const router = useRouter();
   const pathname = usePathname();
@@ -54,7 +55,7 @@ export const Leftbar = () => {
           </SignOutButton>
         </SignedIn>
         <SignedOut>
-            <SignInButton><p className="text-light-2 max-lg:hidden">Sign IN </p></SignInButton>
+            <Link href='/sign-in'><Button className="bg-primary-500"><p className="text-light-2 max-lg:hidden">Sign IN </p></Button></Link>
         </SignedOut>
       </div>
     </section>

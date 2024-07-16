@@ -1,3 +1,4 @@
+
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation";
@@ -11,7 +12,7 @@ import  {ProfileHeader}  from "@/components/shared/ProfileHeader";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const user = await currentUser();
-    if (!user) return null;
+    if (!user) redirect('/sign-in');
     const selfuser = await fetchUser(user.id);
     const userInfo = await fetchUser(params.id);
     if (!selfuser?.onboarding) redirect("/onboarding");

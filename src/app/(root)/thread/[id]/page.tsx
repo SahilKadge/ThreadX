@@ -9,7 +9,7 @@ const page = async ({params}: {params: {id: string}}) => {
     if(!params.id) return null;
     
     const user = await currentUser();
-    if(!user) return null;
+    if (!user) redirect('/sign-in');
 
     const userInfo = await fetchUser(user.id);
     if(!userInfo?.onboarding) redirect('/onboarding');
