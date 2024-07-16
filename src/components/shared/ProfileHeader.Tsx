@@ -1,6 +1,8 @@
 "use client"
 import Link from "next/link";
 import Image from "next/image";
+import React from 'react'
+
 
 interface Props {
   accountId: string;
@@ -12,7 +14,7 @@ interface Props {
   type?: string;
 }
 
-export const  ProfileHeader = ({
+export const ProfileHeader = ({
   accountId,
   authUserId,
   name,
