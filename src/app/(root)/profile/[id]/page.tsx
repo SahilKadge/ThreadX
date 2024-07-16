@@ -7,7 +7,7 @@ import { profileTabs } from "@/constants";
 
 import Image from "next/image";
 import ThreadTab from "@/components/shared/ThreadTab";
-import ProfileHeader from "@/components/shared/ProfileHeader";
+import { ProfileHeader } from "@/components/shared/ProfileHeader";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const user = await currentUser();
