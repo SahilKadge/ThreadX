@@ -1,34 +1,36 @@
-
+import Link from "next/link";
 import Image from "next/image";
-import React from "react";
 
 interface Props {
-    accountId: string;
-    authUserId: string;
-    name:string;
-    username: string;
-    imgUrl: string
-    bio: string;
+  accountId: string;
+  authUserId: string;
+  name: string;
+  username: string;
+  imgUrl: string;
+  bio: string;
+  type?: string;
 }
-export default function ProfileHeader({accountId, authUserId, name, username, imgUrl, bio}: Props){
-    console.log("imageurl", imgUrl)
-    console.log(name)
-    return (
-        <div className='flex w-full flex-col justify-start'>
+
+function ProfileHeader({
+  accountId,
+  authUserId,
+  name,
+  username,
+  imgUrl,
+  bio,
+  type,
+}: Props) {
+  return (
+    <div className='flex w-full flex-col justify-start'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-3'>
           <div className='relative h-20 w-20 object-cover'>
-                <Image
-                    src={imgUrl}
-                    alt='profile_icon'
-                    
-                    height={74}
-                    width={74}
-                    priority
-                    className='rounded-full object-cover shadow-2xl'
-                />
-              
-            
+            <Image
+              src={imgUrl}
+              alt='logo'
+              fill
+              className='rounded-full object-cover shadow-2xl'
+            />
           </div>
 
           <div className='flex-1'>
@@ -38,7 +40,7 @@ export default function ProfileHeader({accountId, authUserId, name, username, im
             <p className='text-base-medium text-gray-1'>@{username}</p>
           </div>
         </div>
-        {/* {accountId === authUserId && type !== "Community" && (
+        {accountId === authUserId && type !== "Community" && (
           <Link href='/profile/edit'>
             <div className='flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2'>
               <Image
@@ -51,13 +53,14 @@ export default function ProfileHeader({accountId, authUserId, name, username, im
               <p className='text-light-2 max-sm:hidden'>Edit</p>
             </div>
           </Link>
-        )} */}
+        )}
       </div>
 
-      <p className='mt-10 mb-10 max-w-lg text-base-regular text-light-2'>{bio}</p>
+      <p className='mt-6 max-w-lg text-base-regular text-light-2'>{bio}</p>
 
-      <div className='mt-12 h-1 w-full bg-dark-3' />
+      <div className='mt-12 h-0.5 w-full bg-dark-3' />
     </div>
-    )
-   
-};
+  );
+}
+
+export default ProfileHeader;
