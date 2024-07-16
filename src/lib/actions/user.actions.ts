@@ -130,25 +130,34 @@ export async function fetchUsers({
   }
 }
 
-export async function getActivity(userId : string){
+interface Activity {
+  _id: string;
+  parentId: string;
+  author: {
+    image: string;
+    name: string;
+  };
+}
+export async function getActivity(userId: string): Promise<Activity[]> {
   connectToDB();
-  try{
+  try {
     // find all threads created by user
-    const userThreads = await Thread.find({author: userId});
-    // collect  all the child thread ids (replies) from the 'children' field 
-    const childThreadIds  = userThreads.reduce((acc, userThread) => {
-      return acc.concat(userThread.children)
-    },[])
+    const userThreads = await Thread.find({ author: userId });
+    // collect all the child thread ids (replies) from the 'children' field 
+    const childThreadIds = userThreads.reduce((acc, userThread) => {
+      return acc.concat(userThread.children);
+    }, []);
     const replies = await Thread.find({
-      _id : {$in: childThreadIds},
-      author: {$ne: userId},
+      _id: { $in: childThreadIds },
+      author: { $ne: userId },
     }).populate({
       path: 'author',
       model: User,
       select: 'name image _id'
-    })
+    });
     return replies;
-  }catch(error: any){
-    console.log(`error fetching activity ${error}`)
+  } catch (error: any) {
+    console.log(`error fetching activity ${error}`);
+    return [];
   }
 }

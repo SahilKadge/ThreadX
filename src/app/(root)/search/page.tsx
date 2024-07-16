@@ -17,10 +17,10 @@ export default async function SearchPage(){
     // fetch users 
     const result = await fetchUsers({
         userId: user.id,
-        searchString:"",
+        searchString: "",
         pageNumber: 1,
         pageSize: 25,
-    })
+      }) || { users: [], isNext: false };
     return (
         <>
             <h1 className="head-text text-white mb-10 ">Search</h1>

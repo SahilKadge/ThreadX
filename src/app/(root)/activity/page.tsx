@@ -5,13 +5,21 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 
+interface Activity {
+  _id: string;
+  parentId: string;
+  author: {
+    image: string;
+    name: string;
+  };
+}
 
 export default async function ActivityPage(){
     const user = await currentUser();
     if(!user) return null;
     const userInfo = await fetchUser(user.id);
     if(!userInfo?.onboarding) redirect('/onboarding');
-    const activities : any = await getActivity(userInfo._id);
+    const activities : Activity[] = await getActivity(userInfo._id);
     console.log(activities)
     return (
         <>
@@ -20,7 +28,7 @@ export default async function ActivityPage(){
       <section className='mt-10 flex flex-col gap-5'>
         {activities.length > 0 ? (
           <>
-            {activities.map((activity) => (
+            {activities.map((activity: Activity) => (
               <Link key={activity._id} href={`/thread/${activity.parentId}`}>
                 <article className='activity-card'>
                   <Image
